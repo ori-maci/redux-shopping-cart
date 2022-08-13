@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import styles from "./Cart.module.css";
-import { checkout, getTotalPrice, removeFromCart, updateQuantity } from "./rx/Cart.slice";
+import { checkoutCart, getTotalPrice, removeFromCart, updateQuantity } from "./rx/Cart.slice";
 
 export function Cart() {
   const dispatch = useAppDispatch();
@@ -27,7 +27,7 @@ export function Cart() {
 
   function onCheckout(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    dispatch(checkout());
+    dispatch(checkoutCart(items));
   }
 
   return (
