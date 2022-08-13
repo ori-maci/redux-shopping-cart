@@ -49,8 +49,16 @@ export const cartSlice = createSlice({
     builder.addCase(checkoutCart.pending, (state) => {
       state.checkoutState = "LOADING";
     })
-    builder.addCase(checkoutCart.fulfilled, (state) => {
+    builder.addCase(checkoutCart.fulfilled, (state, action: PayloadAction<{ success: boolean }>) => {
       state.checkoutState = "READY";
+      const success = action.payload;
+
+      if (success) { 
+        state.checkoutState = "READY";
+        state.items = {};
+      } else {
+        state.checkoutState = "ERROR";
+      }
     })
     builder.addCase(checkoutCart.rejected, (state, action) => {
       state.checkoutState = "ERROR";
