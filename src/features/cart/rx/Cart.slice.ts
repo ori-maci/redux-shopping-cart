@@ -7,13 +7,16 @@ import {
 import { AppDispatch, RootState } from "../../../app/store";
 import classNames from "classnames";
 import { CartItems, checkout } from "../../../app/api";
+import { ProductState } from "../../products/rx/Product.slice";
 
 type CheckoutState = "LOADING" | "READY" | "ERROR";
 
+interface ItemState {
+  [productID: string]: number;
+}
+
 export interface CartState {
-  items: {
-    [productID: string]: number;
-  };
+  items: ItemState;
   checkoutState: CheckoutState;
   errorMessage: string;
 }
@@ -123,10 +126,10 @@ export const getMemoizedNumItems = createSelector(
   }
 );
 
-export const getTotalPrice = createSelector<RootState, any, any, string>(
+export const getTotalPrice = createSelector(
   (state: RootState) => state.cart.items,
   (state: RootState) => state.products.products,
-  (items, products) => {
+  (items: ItemState, products: ProductState) => {
     let total = 0;
 
     for (let id in items) {

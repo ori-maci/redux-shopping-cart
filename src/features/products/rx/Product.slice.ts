@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Product } from "../../../app/api"
 
 
+export interface ProductState {
+  [id: string]: Product;
+}
+
 export interface ProductsState {
-  products: {
-    [id: string]: Product
-  }
+  products: ProductState
 }
 
 const initialState: ProductsState = {
